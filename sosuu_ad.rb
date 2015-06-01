@@ -8,7 +8,6 @@ for b in 2..100 do
 end
 
 while a.length do
-  p a.length
   n =a.shift()
   p.push(n)
 
