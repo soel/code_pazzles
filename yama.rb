@@ -21,6 +21,7 @@
 @y2 = 9
 
 @arr = []
+@resarr = []
 i = 0
 while i < @w * @h do
 	@arr[i] = 10000 #予想される計算結果より大きい値にしておく
@@ -64,3 +65,40 @@ while y < @h do
 	p s
 	y += 1
 end
+
+def bckmv(x, y)
+	cst = 10000
+	tmp = 0
+
+	if x > 0 and @arr[(x - 1) + y * @w] < cst
+		cst =  @arr[(x - 1) + y * @w]
+		x2 = x - 1
+		y2 = y
+	end
+	if y > 0 and @arr[x + (y - 1) * @w] < cst
+		cst = @arr[x + (y - 1) * @w]
+		x2 = x
+		y2 = y - 1
+	end
+	if x < @w - 1 and @arr[(x + 1) + y * @w] < cst
+		cst =  @arr[(x + 1) + y * @w]
+		x2 = x + 1
+		y2 = y
+	end
+	if y < @h -1 and @arr[x + (y + 1) * @w] < cst
+		cst = @arr[x + (y + 1) * @w]
+		x2 = x
+		y2 = y + 1
+	end
+	if cst == 0
+		return
+	end
+	@resarr.push(x2, y2)
+	bckmv(x2, y2)
+end
+
+@resarr.push(@x1, @y1)
+bckmv(@x1, @y1)
+@resarr.push(@x2, @y2)
+
+p @resarr
